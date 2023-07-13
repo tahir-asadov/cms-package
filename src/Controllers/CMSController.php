@@ -6,6 +6,6 @@ use Illuminate\Http\Request;
 
 class CMSController {
   public function index() {
-    return view('cms::index');
+    return view('tacms::index');
   }
 }

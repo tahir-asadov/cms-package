@@ -11,22 +11,30 @@ class CMSServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        AboutCommand::add('My CMS', fn () => ['Version' => '1.0.0']);
-        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'cms');
+
+        // bootstrap web services
+        // listen for events
+        // publish configuration files and database migration
+
+        AboutCommand::add('TACMS', fn () => ['Version' => '1.0.0']);
+        
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'tacms');
 
         $this->publishes([
-            __DIR__.'/../config/cms.php' => config_path('cms.php')
-        ], 'cms-config');
+            __DIR__.'/../config/tacms.php' => config_path('tacms.php')
+        ], 'tacms-config');
 
         $this->publishes([
-            __DIR__.'/../resources/views' => resource_path('views/vendor/cms'),
-        ], 'cms-view');
+            __DIR__.'/../resources/views' => resource_path('views/vendor/tacms'),
+        ], 'tacms-view');
 
         $this->publishes([
             __DIR__.'/../database/migrations' => database_path('migrations'),
-        ], 'cms-migrations');
+        ], 'tacms-migrations');
 
+        $this->publishes([
+            __DIR__.'/../routes' => base_path('routes'),
+        ], 'tacms-routes');
         
         if ($this->app->runningInConsole()) {
             $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
@@ -34,10 +42,6 @@ class CMSServiceProvider extends ServiceProvider
                 Install::class
             ]);
         }
-        // dd('boot');
-        // bootstrap web services
-        // listen for events
-        // publish configuration files and database migration
     }
 
     public function register()
@@ -46,7 +50,7 @@ class CMSServiceProvider extends ServiceProvider
         // register service providers
         // create singleton classes
         $this->mergeConfigFrom(
-            __DIR__.'/../config/cms.php', 'cms'
+            __DIR__.'/../config/tacms.php', 'tacms'
         );
 
     }

@@ -1,3 +1,2 @@
-Index view
+Index view: <code>{{ config('tacms.homepage') }}</code>
 
-{{ config('cms.homepage') }}
