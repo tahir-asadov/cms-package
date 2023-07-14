@@ -20,6 +20,11 @@ class CMSServiceProvider extends ServiceProvider
         
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'tacms');
 
+
+
+        // copy(__DIR__.'/../default/resources/css/tacms.css', resource_path('css/tacms.css'));
+        // copy(__DIR__.'/../default/resources/js/tacms.js', resource_path('js/tacms.js'));
+
         $this->publishes([
             __DIR__.'/../config/tacms.php' => config_path('tacms.php')
         ], 'tacms-config');
@@ -27,6 +32,18 @@ class CMSServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../resources/views' => resource_path('views/vendor/tacms'),
         ], 'tacms-view');
+
+        $this->publishes([
+            __DIR__.'/../resources/css' => resource_path('css'),
+        ], 'tacms-css');
+
+        $this->publishes([
+            __DIR__.'/../resources/js' => resource_path('js'),
+        ], 'tacms-js');
+
+        $this->publishes([
+            __DIR__.'/../resources/vite.config.js' => base_path('vite.config.js'),
+        ], 'tacms-vite');
 
         $this->publishes([
             __DIR__.'/../database/migrations' => database_path('migrations'),

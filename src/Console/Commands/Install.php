@@ -35,6 +35,10 @@ class Install extends Command
         $this->comment('Publishing TACMS Views...');
         $this->callSilent('vendor:publish', ['--tag' => 'tacms-view', '--force' => $this->option('force')]);
 
+        $this->comment('Publishing TACMS Assets...');
+        $this->callSilent('vendor:publish', ['--tag' => 'tacms-css', '--force' => $this->option('force')]);
+        $this->callSilent('vendor:publish', ['--tag' => 'tacms-js', '--force' => $this->option('force')]);
+
         $this->comment('Publishing TACMS Migrations...');
         $this->callSilent('vendor:publish', ['--tag' => 'tacms-migrations', '--force' => $this->option('force')]);
 
@@ -45,6 +49,14 @@ class Install extends Command
         
         $this->comment('Installing TACMS Routes...');
 
+        $this->comment('Installing Breeze...');
+        $this->call('breeze:install', ['stack' => 'blade']);
+        $this->info('Breeze installed successfully.');
+
+        $this->comment('Publishing Vite config...');
+        $this->callSilent('vendor:publish', ['--tag' => 'tacms-vite', '--force' => true]);
+        
+
         $web_route_file = base_path('routes/web.php');
         $tacms_require_line = 'require __DIR__.\'/tacms.php\';';
         
@@ -53,6 +65,7 @@ class Install extends Command
             $is_first_run = true;
             file_put_contents($web_route_file, "\r\n" . $tacms_require_line, FILE_APPEND);
         }
+
         $this->info('TACMS Routes installed successfully.');
         
         if($is_first_run){
@@ -60,5 +73,7 @@ class Install extends Command
             $this->callSilently('migrate');
             $this->info('Database tables created successfully.');
         }
+        
+        
     }
 }
