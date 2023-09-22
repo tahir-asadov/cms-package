@@ -71,7 +71,7 @@ class Install extends Command
         $webRoutes = file_get_contents($web_route_file);
         dump($webRoutes);
         $has_the_line = Str::contains($webRoutes, $tacms_require_line);
-        if ($has_the_line) {
+        if (!$has_the_line) {
             $is_first_run = true;
             file_put_contents($web_route_file, "\r\n" . $tacms_require_line, FILE_APPEND);
         }
