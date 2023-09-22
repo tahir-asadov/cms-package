@@ -1,1 +1,1 @@
-alert('tacms');
+console.log('tacms:testing');
