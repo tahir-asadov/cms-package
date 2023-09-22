@@ -4,6 +4,7 @@ namespace Tahir\CMS\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Str;
 
 class Install extends Command
@@ -47,6 +48,12 @@ class Install extends Command
 
         $this->info('TACMS scaffolding installed successfully.');
         
+        $this->comment('Add npm packages...');
+        Process::run('npm i @tahir-asadli/uploader');
+        Process::run('npm i slugify');
+        // $this->callSilent('npm i @tahir-asadli/uploader', ['--tag' => 'tacms-npm-uploader', '--force' => true]);
+        // $this->callSilent('npm i slugify', ['--tag' => 'tacms-npm-slugify', '--force' => true]);
+        
         $this->comment('Installing TACMS Routes...');
 
         $this->comment('Installing Breeze...');
@@ -55,6 +62,7 @@ class Install extends Command
 
         $this->comment('Publishing Vite config...');
         $this->callSilent('vendor:publish', ['--tag' => 'tacms-vite', '--force' => true]);
+
         
 
         $web_route_file = base_path('routes/web.php');
