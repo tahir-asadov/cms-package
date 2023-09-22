@@ -69,16 +69,19 @@ class Install extends Command
         $tacms_require_line = 'require __DIR__.\'/tacms.php\';';
         
         $webRoutes = file_get_contents($web_route_file);
+        dump($webRoutes);
         if (!Str::contains($webRoutes, $tacms_require_line)) {
             $is_first_run = true;
             file_put_contents($web_route_file, "\r\n" . $tacms_require_line, FILE_APPEND);
         }
+        $webRoutes = file_get_contents($web_route_file);
+        dump($webRoutes);
 
         $this->info('TACMS Routes installed successfully.');
-        
+        $this->info($is_first_run ? 'first run' : 'not first run');
         if($is_first_run){
             $this->comment('Running migrations...');
-            $this->callSilently('migrate');
+            $this->call('migrate');
             $this->info('Database tables created successfully.');
         }
         
