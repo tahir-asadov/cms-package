@@ -39,6 +39,15 @@ class Install extends Command
             $is_first_run = true;
         }
 
+        $fileSystemConfig = file_get_contents(config_path('filesystems.php'));
+        if (!Str::contains($fileSystemConfig, 'public_path(\'media\') => storage_path(\'app\/media\'),')) {
+            file_put_contents(config_path('filesystems.php'), str_replace(
+                "public_path('storage') => storage_path('app/public'),",
+                "public_path('storage') => storage_path('app/public'),public_path('media') => storage_path('app/media')",
+                $fileSystemConfig
+            ));
+        }
+
         $this->comment('Publishing TACMS Assets...');
         $this->comment('Publishing TACMS Configs...');
         $this->callSilent('vendor:publish', ['--tag' => 'tacms-config', '--force' => $this->option('force')]);
