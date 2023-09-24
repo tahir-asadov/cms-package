@@ -11,7 +11,7 @@ class StoreMediaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,13 @@ class StoreMediaRequest extends FormRequest
      */
     public function rules(): array
     {
+        
+        $extensions = '';
+        foreach (config('tacms.media_extensions') as $mime_type){
+            $extensions .= join(",", $mime_type) . ",";
+        }
         return [
-            //
+            'files.*' => 'file|mimes:' . $extensions,
         ];
     }
 }

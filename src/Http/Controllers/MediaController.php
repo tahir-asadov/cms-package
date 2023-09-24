@@ -20,9 +20,9 @@ class MediaController extends PrivateController
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(StoreMediaRequest $request)
     {
-        //
+        return view('tacms::private.media.create');
     }
 
     /**
@@ -30,7 +30,26 @@ class MediaController extends PrivateController
      */
     public function store(StoreMediaRequest $request)
     {
-        //
+        $mimes = config('tacms.media_extensions');
+
+        $reversed_extensions = [];
+        foreach($mimes as $key => $extensions) {
+            foreach($extensions as $extension) {
+                $reversed_extensions[$extension] = $key;
+            }
+        }
+        if ($request->hasfile('files')) {
+            foreach($request->file('files') as $file) {
+
+                $path = $file->store('media');
+                $name = $file->getClientOriginalName();
+                $extension = strtolower($file->getClientOriginalExtension());
+                $mime = $file->getClientMimeType();
+                $type = $reversed_extensions[$extension];
+                dd($path);
+            }
+        }
+        return redirect()->route('media.create')->with('error', 'Error occured!');
     }
 
     /**
