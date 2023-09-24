@@ -50,20 +50,20 @@ class Install extends Command
 
         $this->comment('Publishing TACMS Assets...');
         $this->comment('Publishing TACMS Configs...');
-        $this->callSilent('vendor:publish', ['--tag' => 'tacms-config', '--force' => $this->option('force')]);
+        $this->call('vendor:publish', ['--tag' => 'tacms-config', '--force' => $this->option('force')]);
 
         $this->comment('Publishing TACMS Views...');
-        $this->callSilent('vendor:publish', ['--tag' => 'tacms-view', '--force' => $this->option('force')]);
+        $this->call('vendor:publish', ['--tag' => 'tacms-view', '--force' => $this->option('force')]);
 
         $this->comment('Publishing TACMS Assets...');
-        $this->callSilent('vendor:publish', ['--tag' => 'tacms-css', '--force' => $this->option('force')]);
-        $this->callSilent('vendor:publish', ['--tag' => 'tacms-js', '--force' => $this->option('force')]);
+        $this->call('vendor:publish', ['--tag' => 'tacms-css', '--force' => $this->option('force')]);
+        $this->call('vendor:publish', ['--tag' => 'tacms-js', '--force' => $this->option('force')]);
 
         $this->comment('Publishing TACMS Migrations...');
-        $this->callSilent('vendor:publish', ['--tag' => 'tacms-migrations', '--force' => $this->option('force')]);
+        $this->call('vendor:publish', ['--tag' => 'tacms-migrations', '--force' => $this->option('force')]);
 
         $this->comment('Publishing TACMS Routes...');
-        $this->callSilent('vendor:publish', ['--tag' => 'tacms-routes', '--force' => $this->option('force')]);
+        $this->call('vendor:publish', ['--tag' => 'tacms-routes', '--force' => $this->option('force')]);
         
         
         if($is_first_run) {
@@ -73,7 +73,7 @@ class Install extends Command
         }
 
         $this->comment('Publishing Vite config...');
-        $this->callSilent('vendor:publish', ['--tag' => 'tacms-vite', '--force' => true]);
+        $this->call('vendor:publish', ['--tag' => 'tacms-vite', '--force' => true]);
 
 
         
@@ -81,6 +81,9 @@ class Install extends Command
         Process::run('npm i @tahir-asadli/uploader');
         Process::run('npm i slugify');
 
+        $this->comment('Linking folders...');
+        $this->call('storage:link', ['--force' => $this->option('force')]);
+        
         
 
         if ($is_first_run) {
