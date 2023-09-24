@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Tahir\CMS\Http\Controllers;
 
-use App\Http\Requests\StoreMediaRequest;
-use App\Http\Requests\UpdateMediaRequest;
-use App\Models\Media;
+use Tahir\CMS\Models\Media;
+use Tahir\CMS\Requests\StoreMediaRequest;
+use Tahir\CMS\Requests\UpdateMediaRequest;
 use Tahir\CMS\Controllers\PrivateController;
 
 class MediaController extends PrivateController

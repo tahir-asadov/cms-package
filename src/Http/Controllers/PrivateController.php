@@ -1,6 +1,6 @@
 <?php
 
-namespace Tahir\CMS\Controllers;
+namespace Tahir\CMS\Http\Controllers;
 
 use Illuminate\Http\Request;
 

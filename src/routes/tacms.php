@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\MediaController;
+use Tahir\CMS\Controllers\MediaController;
 use Illuminate\Support\Facades\Route;
 use Tahir\CMS\Controllers\PublicController;
 
@@ -11,6 +11,6 @@ Route::controller(PublicController::class)->group(function () {
 
 
 Route::controller(MediaController::class)->group(function () {
-  Route::get('', 'index');
+  Route::get('media', 'index');
 });
 
