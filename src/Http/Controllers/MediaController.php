@@ -3,9 +3,9 @@
 namespace Tahir\CMS\Http\Controllers;
 
 use Tahir\CMS\Models\Media;
-use Tahir\CMS\Requests\StoreMediaRequest;
-use Tahir\CMS\Requests\UpdateMediaRequest;
-use Tahir\CMS\Controllers\PrivateController;
+use Tahir\CMS\Http\Controllers\PrivateController;
+use Tahir\CMS\Http\Requests\StoreMediaRequest;
+use Tahir\CMS\Http\Requests\UpdateMediaRequest;
 
 class MediaController extends PrivateController
 {

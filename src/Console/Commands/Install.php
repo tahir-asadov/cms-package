@@ -40,7 +40,7 @@ class Install extends Command
         }
 
         $fileSystemConfig = file_get_contents(config_path('filesystems.php'));
-        if (!Str::contains($fileSystemConfig, 'public_path(\'media\') => storage_path(\'app\/media\'),')) {
+        if (!Str::contains($fileSystemConfig, "public_path('media') => storage_path('app/media'),")) {
             file_put_contents(config_path('filesystems.php'), str_replace(
                 "public_path('storage') => storage_path('app/public'),",
                 "public_path('storage') => storage_path('app/public'),public_path('media') => storage_path('app/media'),",
