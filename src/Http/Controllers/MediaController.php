@@ -14,7 +14,7 @@ class MediaController extends PrivateController
      */
     public function index()
     {
-        return view('tacms::private.media.index');
+        return view('tacms::dashboard.media.index');
     }
 
     /**
@@ -22,7 +22,7 @@ class MediaController extends PrivateController
      */
     public function create(StoreMediaRequest $request)
     {
-        return view('tacms::private.media.create');
+        return view('tacms::dashboard.media.create');
     }
 
     /**
@@ -46,7 +46,38 @@ class MediaController extends PrivateController
                 $extension = strtolower($file->getClientOriginalExtension());
                 $mime = $file->getClientMimeType();
                 $type = $reversed_extensions[$extension];
-                dd($path);
+                $media = new Media();
+                $media->name = $name;
+                $media->extension = $extension;
+                $media->type = $type;
+                $media->mime = $mime;
+                $media->size = 'original';
+                $media->path = $path;
+                $media->user_id = auth()->user()->id;
+                $media->save();
+                if($type == 'image') {
+                    $variants = Media::resize($path);
+                    foreach($variants as $key => $variant) {
+                        $resized_media = new Media();
+                        $resized_media->name = $name;
+                        $resized_media->extension = $extension;
+                        $resized_media->type = $type;
+                        $resized_media->mime = $mime;
+                        $resized_media->size = $key;
+                        $resized_media->parent = $media->id;
+                        $resized_media->path = $variant;
+                        $resized_media->user_id = auth()->user()->id;
+                        $resized_media->save();
+                    }
+                }
+
+                if(request()->ajax()){
+                    return response()->json([
+                        'message' => 'ok',
+                    ]);
+                }else {
+                    return redirect()->route('dashboard.media.index')->with('success', 'Files uploaded!');
+                }
             }
         }
         return redirect()->route('media.create')->with('error', 'Error occured!');

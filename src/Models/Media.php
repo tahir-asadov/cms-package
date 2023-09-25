@@ -13,7 +13,7 @@ class Media extends Model
     public static function resize($path) {
 
         $variants = [];
-        $image_size_variants = config('cms.media_sizes', []);
+        $image_size_variants = config('tacms.media_sizes', []);
         foreach($image_size_variants as $suffix => $image_variant) {
 
             $img = Image::make($path);

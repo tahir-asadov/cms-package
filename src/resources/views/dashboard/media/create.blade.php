@@ -31,7 +31,7 @@
   </div>
   @endif
 </div>
-<form action="{{ route('media.store') }}" enctype="multipart/form-data" method="post">
+<form action="{{ route('dashboard.media.store') }}" enctype="multipart/form-data" method="post">
   @csrf
   <input type="file" name="files[]" multiple>
   <input type="submit">
